@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brain Tumor Diagnosis</title>
+    <style>
+        body {
+            background-color: #F9F9F9;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 40px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2F6690;
+            margin-top: 0;
+            font-size: 36px;
+        }
+        
+        h2 {
+            color: #57606F;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        form {
+            margin-top: 20px;
+        }
+        
+        input[type="file"] {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .preview-image img {
+            max-width: 300px;
+            max-height: 300px;
+            margin-top: 10px;
+        }
+        
+        .prediction {
+            font-weight: bold;
+            color: #2F6690;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #2F6690;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            margin-top: 9px;
+        }
+        
+        .btn:hover {
+            background-color: #4A90C6;
+        }
+        
+        .error {
+            color: #FF5252;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .press-enter {
+            color: #57606F;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        
+        .prediction-text {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Brain Tumor Diagnosis</h1>
+
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <h2>Select your MRI image:</h2>
+            <input type="file" id="my_image" name="my_image"><br>
+            <input type="submit" name="action" value="Submit" class="btn">
+        </form>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if prediction %}
+        <div class="prediction">
+            <h2>Prediction:</h2>
+            <p class="prediction-text">You have {{ prediction }}</p>
+            <img src="{{ img_path }}" alt="Uploaded Image"><br>
+            <p>Uploaded Image: {{ uploaded_img }}</p>
+
+            <p class="press-enter">Press Enter to proceed for Grade Detection</p>
+
+            <form action="/" method="POST">
+                <input type="hidden" name="predicted_tumor_type" value="{{ prediction }}">
+                <input type="submit" name="action" value="Enter" class="btn">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
